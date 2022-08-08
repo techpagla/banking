@@ -8,22 +8,29 @@ function calculate (inputId, showId) {
     var previousDeposit = parseFloat(depositText);
     var newDeposit = previousDeposit;
     newDeposit = newDeposit + depositInputValue;
-    document.getElementById(showId).innerText = newDeposit;
-    document.getElementById(inputId).value = "";
-    return depositInputValue;
+    console.log(depositInputValue);
+    if(depositInputValue > 0){
+        document.getElementById(showId).innerText = newDeposit;
+        document.getElementById(inputId).value = "";
+        return depositInputValue;
+    }
+    
 }
 
 //Totall banlance function
   function totallBalance(symbol){
     var balanceText = document.getElementById('balance').innerText;
     var previousBalance = parseFloat(balanceText);
-    if(symbol == true) {
+    if(symbol == true && depositInputValue > 0 ) {
         var newBalance =  previousBalance + depositInputValue;
-    document.getElementById('balance').innerText = newBalance;
+        document.getElementById('balance').innerText = newBalance;
+    }
+    else if(symbol == false && depositInputValue > 0 && depositInputValue < previousBalance) {
+        var newBalance =  previousBalance - depositInputValue;
+        document.getElementById('balance').innerText = newBalance;
     }
     else {
-        var newBalance =  previousBalance - depositInputValue;
-    document.getElementById('balance').innerText = newBalance;
+        alert(depositInputValue + " is not a valid amount!");
     }
     
   }
@@ -39,11 +46,11 @@ document.getElementById('deposit-btn').addEventListener('click', function(){
 
 document.getElementById('withdraw-btn').addEventListener('click', function(){
          
-    calculate('withdraw', 'withdraw-value');
+            calculate('withdraw', 'withdraw-value');
             var symbol = false;
 
             //balance add by withdraw
-            totallBalance();
+            totallBalance(symbol);
    
 });
 
